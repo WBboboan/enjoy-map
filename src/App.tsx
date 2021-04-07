@@ -1,32 +1,58 @@
 import React, { Component } from 'react'
-import L from 'leaflet'
-export default class App extends Component {
-	mapContainerNode: any
+import './App.less'
+import { Map } from 'leaflet'
+import MapInit from '@components/GisTools/MapInits'
+// import L from 'leaflet'
+import ZoomControl from '@components/GisTools/ZoomControl'
+import ToolBar from '@components/GisTools/ToolBar'
+import BaseMapLayerSwitch from '@components/GisTools/BaseMapLayerSwitch'
+import MapEdit from '@components/mapEdit'
+import WMTSLayer from '@components/wmtsLayer'
+import StationDemo from '@components/station'
+import Kriging from '@components/kriging'
 
-	componentDidMount() {
-		const map = L.map(this.mapContainerNode).setView([51.505, -0.09], 13)
+interface IProps {}
+interface IState {
+  map: Map | undefined
+}
 
-		L.tileLayer(
-			'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw',
-			{
-				maxZoom: 18,
-				attribution:
-					'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
-					'<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-					'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-				id: 'mapbox/streets-v11',
-				tileSize: 512,
-				zoomOffset: -1,
-			}
-		).addTo(map)
-	}
+export default class App extends Component<IProps, IState> {
+  state = {
+    map: undefined,
+  }
+  handleAfterMapCreated = (map: Map) => {
+    this.setState({ map: map })
+  }
 
-	render() {
-		return (
-			<div
-				style={{ height: '100%' }}
-				ref={(node) => (this.mapContainerNode = node)}
-			/>
-		)
-	}
+  mapContainerNode: any
+
+  render() {
+    const { map } = this.state
+    return (
+      <div className="map-container">
+        <div className="zoom-control-container">
+          {map ? <ZoomControl map={map} /> : null}
+        </div>
+        {/* <div>{map ? <IsoDemo map={map} /> : null}</div> */}
+        <div className="map-toolbar">{map ? <ToolBar map={map} /> : null}</div>
+        <MapInit
+          onMapCreated={this.handleAfterMapCreated}
+          // baseLayerType={'image'}
+        />
+        <div className="base-layer-switch-container">
+          {map ? <BaseMapLayerSwitch map={map} /> : null}
+        </div>
+        {map ? <StationDemo map={map} /> : null}
+        {map ? <Kriging map={map} /> : null}
+        {/* {map ? <TDTEPSG4326 map={map} /> : null} */}
+        {map ? <WMTSLayer map={map} /> : null}
+        {/* {map ? <AMapDemo map={map} /> : null} */}
+        {map ? <MapEdit map={map} /> : null}
+        {/* <div
+          style={{ height: '100%' }}
+          ref={(node) => (this.mapContainerNode = node)}
+        /> */}
+      </div>
+    )
+  }
 }

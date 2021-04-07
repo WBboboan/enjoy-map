@@ -1,0 +1,90 @@
+@import '../../../theme/theme.less';
+
+._baseMapSwitcher {
+	border-radius: @theme-border-radius;
+	
+
+	&:hover {
+		border: 2px solid transparent;
+	}
+
+	.baseMapList {
+		display: flex;
+		justify-content: space-evenly;
+		width: 128px;
+		border: 2px solid @theme-app-background-color;
+		box-shadow: @box-shadow-base;
+		border-radius: @theme-border-radius;
+		transition: all @transition-duration;
+
+		&:hover {
+			width: 408px;
+			border: none;
+			box-shadow: none;
+
+			.baseMapItem {
+				border: 2px solid @theme-app-background-color;
+				border-radius: @theme-border-radius;
+
+				.label {
+					display: inline;
+				}
+			}
+
+			.hasSelectedItem {
+				border: 2px solid @primary-color;
+
+				.mask {
+					background-color: rgba(0, 0, 0, 0.25);
+					border-radius: @theme-border-radius;
+
+					.label {
+						display: inline !important;
+					}
+				}
+			}
+		}
+
+		.baseMapItem {
+			width: 128px;
+			height: 68px;
+
+			&:last-child {
+				border-top-right-radius: @theme-border-radius;
+				border-bottom-right-radius: @theme-border-radius;
+			}
+
+			&:first-child {
+				border-top-left-radius: @theme-border-radius;
+				border-bottom-left-radius: @theme-border-radius;
+			}
+
+			&:hover {
+				border: 2px solid @primary-color;
+
+				.mask {
+					background-color: rgba(0, 0, 0, 0.25);
+					border-radius: @theme-border-radius;
+
+					.label {
+						display: inline;
+						color: @front-color;
+					}
+				}
+			}
+
+			.mask {
+				background-color: transparent;
+				text-align: center;
+				line-height: 68px;
+				border-radius: 0.5*@theme-border-radius;
+
+				.label {
+					color: @theme-font-color2;
+					display: none;
+					transition: all @transition-duration;
+				}
+			}
+		}
+	}
+}

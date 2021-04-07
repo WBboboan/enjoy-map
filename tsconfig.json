@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -17,9 +13,25 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react"
+    "jsx": "react",
+    "baseUrl": "./",
+    "paths": {
+      // 指定模块的路径，和baseUrl有关联，和webpack中resolve.alias配置一样
+      // "src": [
+      //   //指定后可以在文件之直接 import * from 'src';
+      //   "./src"
+      // ],
+      "@components/*": ["./src/components/*"],
+      "@config/*": ["./src/config/*"],
+      "@pages/*": ["./src/pages/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@layouts/*": ["./src/layouts/*"],
+      "@api/*": ["./src/api/*"],
+      "@assets/*": ["./src/assets/*"],
+      "@css/*": ["./src/css/*"],
+      "@contexts/*": ["./src/contexts/*"],
+      "@containers/*": ["./src/containers/*"]
+    }
   },
-  "include": [
-    "src"
-  ]
+  "include": ["src"]
 }
